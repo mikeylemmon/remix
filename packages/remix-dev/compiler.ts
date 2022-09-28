@@ -6,6 +6,7 @@ import debounce from "lodash.debounce";
 import chokidar from "chokidar";
 import { NodeModulesPolyfillPlugin } from "@esbuild-plugins/node-modules-polyfill";
 import { pnpPlugin as yarnPnpPlugin } from "@yarnpkg/esbuild-plugin-pnp";
+import aliasPlugin from "esbuild-plugin-alias";
 
 import { BuildMode, BuildTarget } from "./build";
 import type { RemixConfig } from "./config";
@@ -355,6 +356,10 @@ async function createBrowserBuild(
     yarnPnpPlugin(),
   ];
 
+  if (config.resolveAliases) {
+    plugins.unshift(aliasPlugin(config.resolveAliases));
+  }
+
   return esbuild.build({
     entryPoints,
     outdir: config.assetsBuildDirectory,
@@ -388,6 +393,7 @@ async function createBrowserBuild(
     jsx: "automatic",
     jsxDev: options.mode !== BuildMode.Production,
     plugins,
+    resolveExtensions: config.resolveExtensions,
   });
 }
 
@@ -427,6 +433,10 @@ function createServerBuild(
 
   if (config.serverPlatform !== "node") {
     plugins.unshift(NodeModulesPolyfillPlugin());
+  }
+
+  if (config.resolveAliases) {
+    plugins.unshift(aliasPlugin(config.resolveAliases));
   }
 
   return esbuild
@@ -481,6 +491,7 @@ function createServerBuild(
       jsx: "automatic",
       jsxDev: options.mode !== BuildMode.Production,
       plugins,
+      resolveExtensions: config.resolveExtensions,
     })
     .then(async (build) => {
       await writeServerBuildResult(config, build.outputFiles);

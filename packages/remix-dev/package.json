@@ -32,6 +32,7 @@
     "chokidar": "^3.5.1",
     "dotenv": "^16.0.0",
     "esbuild": "0.14.51",
+    "esbuild-plugin-alias": "^0.2.1",
     "exit-hook": "2.2.1",
     "express": "^4.17.1",
     "fast-glob": "3.2.11",

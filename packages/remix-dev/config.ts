@@ -157,6 +157,20 @@ export interface AppConfig {
     | string
     | string[]
     | (() => Promise<string | string[]> | string | string[]);
+
+  /*
+   * A prioritized list of file extensions used for implicit file resolution.
+   * Defaults to [".tsx", ".ts", ".jsx", ".js", ".css", ".json"]
+   */
+  resolveExtensions?: string[];
+
+  /*
+   * A set of aliases to apply during path resolution.
+   * E.g. { "react-native": require.resolve("react-native-web") } will replace
+   * all imports from "react-native" with imports from the "react-native-web"
+   * package.
+   */
+  resolveAliases?: Record<string, string>;
 }
 
 /**
@@ -275,6 +289,20 @@ export interface RemixConfig {
    * The path for the tsconfig file, if present on the root directory.
    */
   tsconfigPath: string | undefined;
+
+  /*
+   * A prioritized list of file extensions used for implicit file resolution.
+   * Defaults to [".tsx", ".ts", ".jsx", ".js", ".css", ".json"]
+   */
+  resolveExtensions?: string[];
+
+  /*
+   * A set of aliases to apply during path resolution.
+   * E.g. { "react-native": require.resolve("react-native-web") } will replace
+   * all imports from "react-native" with imports from the "react-native-web"
+   * package.
+   */
+  resolveAliases?: Record<string, string>;
 }
 
 /**
@@ -472,6 +500,8 @@ export async function readConfig(
     writeConfigDefaults(tsconfigPath);
   }
 
+  let { resolveExtensions, resolveAliases } = appConfig;
+
   return {
     appDirectory,
     cacheDirectory,
@@ -495,6 +525,8 @@ export async function readConfig(
     mdx,
     watchPaths,
     tsconfigPath,
+    resolveExtensions,
+    resolveAliases,
   };
 }
 
