@@ -5573,6 +5573,11 @@ esbuild-openbsd-64@0.14.47:
   resolved "https://registry.npmjs.org/esbuild-openbsd-64/-/esbuild-openbsd-64-0.14.47.tgz#309af806db561aa886c445344d1aacab850dbdc5"
   integrity sha512-QpgN8ofL7B9z8g5zZqJE+eFvD1LehRlxr25PBkjyyasakm4599iroUpaj96rdqRlO2ShuyqwJdr+oNqWwTUmQw==
 
+esbuild-plugin-alias@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.npmjs.org/esbuild-plugin-alias/-/esbuild-plugin-alias-0.2.1.tgz#45a86cb941e20e7c2bc68a2bea53562172494fcb"
+  integrity sha512-jyfL/pwPqaFXyKnj8lP8iLk6Z0m099uXR45aSN8Av1XD4vhvQutxxPzgA2bTcAwQpa1zCXDcWOlhFgyP3GKqhQ==
+
 esbuild-register@^3.3.2:
   version "3.3.2"
   resolved "https://registry.npmjs.org/esbuild-register/-/esbuild-register-3.3.2.tgz"

@@ -2,6 +2,7 @@ import * as path from "path";
 import { builtinModules as nodeBuiltins } from "module";
 import * as esbuild from "esbuild";
 import { NodeModulesPolyfillPlugin } from "@esbuild-plugins/node-modules-polyfill";
+import aliasPlugin from "esbuild-plugin-alias";
 
 import { type WriteChannel } from "../channel";
 import { type RemixConfig } from "../config";
@@ -81,6 +82,10 @@ const createEsbuildConfig = (
     NodeModulesPolyfillPlugin(),
   ];
 
+  if (config.resolveAliases) {
+    plugins.unshift(aliasPlugin(config.resolveAliases));
+  }
+
   return {
     entryPoints,
     outdir: config.assetsBuildDirectory,
@@ -112,6 +117,7 @@ const createEsbuildConfig = (
     jsx: "automatic",
     jsxDev: options.mode !== "production",
     plugins,
+    resolveExtensions: config.resolveExtensions,
   };
 };
 

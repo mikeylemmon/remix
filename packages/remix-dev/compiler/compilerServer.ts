@@ -2,6 +2,7 @@ import * as path from "path";
 import * as esbuild from "esbuild";
 import * as fse from "fs-extra";
 import { NodeModulesPolyfillPlugin } from "@esbuild-plugins/node-modules-polyfill";
+import aliasPlugin from "esbuild-plugin-alias";
 
 import { type ReadChannel } from "../channel";
 import { type RemixConfig } from "../config";
@@ -63,6 +64,10 @@ const createEsbuildConfig = (
     plugins.unshift(NodeModulesPolyfillPlugin());
   }
 
+  if (config.resolveAliases) {
+    plugins.unshift(aliasPlugin(config.resolveAliases));
+  }
+
   return {
     absWorkingDir: config.rootDirectory,
     stdin,
@@ -112,6 +117,7 @@ const createEsbuildConfig = (
     jsx: "automatic",
     jsxDev: options.mode !== "production",
     plugins,
+    resolveExtensions: config.resolveExtensions,
   };
 };
 
